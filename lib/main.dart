@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -33,9 +32,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool litiaseBiliar = false;
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController idadeController = TextEditingController();
+  TextEditingController leucocitosController = TextEditingController();
+  TextEditingController glicemiaController = TextEditingController();
+  TextEditingController astController = TextEditingController();
+  TextEditingController ldhController = TextEditingController();
+  int pontuacao = 0;
+  String pontuacaoString = '';
+  double mortalidade = 0;
+  String mortalidadeString = '';
   @override
   void initState(){
     super.initState();
+  }
+  void handleSubmit(){
+    if(litiaseBiliar){
+      if(idadeController.text == '70'){
+        pontuacao += 1;
+      }
+    }else{
+
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -54,11 +72,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: nomeController,
                       decoration: const InputDecoration(
                         labelText: 'Nome'
                       )
                     ),
                     TextFormField(
+                      controller: idadeController,
                       decoration: const InputDecoration(
                         labelText: 'Idade:'
                       )
@@ -74,28 +94,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     Row(
                       children: [
                         const Expanded(flex: 1,child: Text('Leucócitos:'),),
-                        Expanded(flex: 3,child: TextFormField(), ),
+                        Expanded(flex: 3,child: TextFormField(controller: leucocitosController,), ),
                         const Expanded(flex: 1,child: Text('cél./mm3', textAlign: TextAlign.center),)
                       ],
                     ),
                     Row(
                       children: [
                         const Expanded(flex: 1,child: Text('Glicemia:',),),
-                        Expanded(flex: 3,child: TextFormField(), ),
+                        Expanded(flex: 3,child: TextFormField(controller: glicemiaController,), ),
                         const Expanded(flex: 1,child: Text('mmol/L', textAlign: TextAlign.center),)
                       ],
                     ),
                     Row(
                       children: [
                         const Expanded(flex: 1,child: Text('AST/TGO',),),
-                        Expanded(flex: 3,child: TextFormField(), ),
+                        Expanded(flex: 3,child: TextFormField(controller: astController,), ),
                         const Expanded(flex: 1,child: Text('UI/L', textAlign: TextAlign.center),)
                       ],
                     ),
                     Row(
                       children: [
                         const Expanded(flex: 1,child: Text('LDH',),),
-                        Expanded(flex: 3,child: TextFormField(), ),
+                        Expanded(flex: 3,child: TextFormField(controller: ldhController,), ),
                         const Expanded(flex: 1,child: Text('UI/L', textAlign: TextAlign.center),)
                       ],
                     ),
@@ -109,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   const Text('Pontuação:'),
                   const SizedBox(width: 10,),
-                  const Text('Resultado')
+                  Text('$pontuacaoString')
                 ],
               ),
               const SizedBox(height: 20,),
@@ -117,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   const Text('Mortalidade:'),
                   const SizedBox(width: 10,),
-                  const Text('Resultado')
+                  Text('$mortalidadeString')
                 ],
               )
             ],
