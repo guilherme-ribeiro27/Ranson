@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +14,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        
       ),
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'Novo paciente'),
@@ -43,18 +43,94 @@ class _MyHomePageState extends State<MyHomePage> {
   double mortalidade = 0;
   String mortalidadeString = '';
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
-  void handleSubmit(){
-    if(litiaseBiliar){
-      if(idadeController.text == '70'){
-        pontuacao += 1;
-      }
-    }else{
 
+  void handleSubmit() {
+    pontuacao = 0;
+    mortalidade = 0;
+    if (litiaseBiliar) {
+      if (int.parse(idadeController.text) > 70) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(leucocitosController.text) > 18000) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(glicemiaController.text) > 12.2) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(astController.text) > 250) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(ldhController.text) > 400) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+    } else {
+      if (int.parse(idadeController.text) > 55) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(leucocitosController.text) > 16000) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(glicemiaController.text) > 11) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(astController.text) > 250) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
+      if (int.parse(ldhController.text) > 350) {
+        setState(() {
+          pontuacao += 1;
+        });
+      }
     }
+    if (pontuacao >= 3) {
+      pontuacaoString = 'Grave';
+    } else {
+      pontuacaoString = 'Não é grave';
+    }
+
+    if (pontuacao >= 0 && pontuacao <= 2) {
+      setState(() {
+        mortalidade = 2.0;
+      });
+    }else if(pontuacao >= 3 && pontuacao <= 4){
+      setState(() {
+        mortalidade = 15.0;
+      });
+    }else if(pontuacao >= 5 && pontuacao <= 6){
+      setState(() {
+        mortalidade = 40.0;
+      });
+    }else if(pontuacao >= 7 && pontuacao <= 8){
+      setState(() {
+        mortalidade = 100.0;
+      });
+    }
+    setState(() {
+      mortalidadeString = mortalidade.toString() + '%';
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,71 +148,135 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: nomeController,
-                      decoration: const InputDecoration(
-                        labelText: 'Nome'
-                      )
-                    ),
+                        controller: nomeController,
+                        decoration: const InputDecoration(labelText: 'Nome')),
                     TextFormField(
-                      controller: idadeController,
-                      decoration: const InputDecoration(
-                        labelText: 'Idade:'
-                      )
-                    ),
+                        controller: idadeController,
+                        decoration: const InputDecoration(labelText: 'Idade:')),
                     Row(
                       children: [
-                        Checkbox(value: litiaseBiliar, onChanged: (value){setState(() {
-                          litiaseBiliar = value!;
-                        });},),
+                        Checkbox(
+                          value: litiaseBiliar,
+                          onChanged: (value) {
+                            setState(() {
+                              litiaseBiliar = value!;
+                            });
+                          },
+                        ),
                         const Text('Litíase biliar?'),
                       ],
                     ),
                     Row(
                       children: [
-                        const Expanded(flex: 1,child: Text('Leucócitos:'),),
-                        Expanded(flex: 3,child: TextFormField(controller: leucocitosController,), ),
-                        const Expanded(flex: 1,child: Text('cél./mm3', textAlign: TextAlign.center),)
+                        const Expanded(
+                          flex: 1,
+                          child: Text('Leucócitos:'),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            controller: leucocitosController,
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text('cél./mm3', textAlign: TextAlign.center),
+                        )
                       ],
                     ),
                     Row(
                       children: [
-                        const Expanded(flex: 1,child: Text('Glicemia:',),),
-                        Expanded(flex: 3,child: TextFormField(controller: glicemiaController,), ),
-                        const Expanded(flex: 1,child: Text('mmol/L', textAlign: TextAlign.center),)
+                        const Expanded(
+                          flex: 1,
+                          child: Text(
+                            'Glicemia:',
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            controller: glicemiaController,
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text('mmol/L', textAlign: TextAlign.center),
+                        )
                       ],
                     ),
                     Row(
                       children: [
-                        const Expanded(flex: 1,child: Text('AST/TGO',),),
-                        Expanded(flex: 3,child: TextFormField(controller: astController,), ),
-                        const Expanded(flex: 1,child: Text('UI/L', textAlign: TextAlign.center),)
+                        const Expanded(
+                          flex: 1,
+                          child: Text(
+                            'AST/TGO',
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            controller: astController,
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text('UI/L', textAlign: TextAlign.center),
+                        )
                       ],
                     ),
                     Row(
                       children: [
-                        const Expanded(flex: 1,child: Text('LDH',),),
-                        Expanded(flex: 3,child: TextFormField(controller: ldhController,), ),
-                        const Expanded(flex: 1,child: Text('UI/L', textAlign: TextAlign.center),)
+                        const Expanded(
+                          flex: 1,
+                          child: Text(
+                            'LDH',
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            controller: ldhController,
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: Text('UI/L', textAlign: TextAlign.center),
+                        )
                       ],
                     ),
-                    const SizedBox(height: 20,),
-                    ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity,40)),child: const Text('ADICIONAR PACIENTE'),)
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 40)),
+                      child: const Text('ADICIONAR PACIENTE'),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
                   const Text('Pontuação:'),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text('$pontuacaoString')
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
                   const Text('Mortalidade:'),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text('$mortalidadeString')
                 ],
               )
