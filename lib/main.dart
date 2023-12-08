@@ -48,60 +48,46 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void handleSubmit() {
-    pontuacao = 0;
-    mortalidade = 0;
+    setState(() {
+      pontuacao = 0;
+      mortalidade = 0;
+    });
     if (litiaseBiliar) {
-      if (int.parse(idadeController.text) > 70) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(leucocitosController.text) > 18000) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(glicemiaController.text) > 12.2) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(astController.text) > 250) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(ldhController.text) > 400) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
+      setState(() {
+        if (int.parse(idadeController.text) > 70) {
+            pontuacao += 1;          
+        }
+        if (int.parse(leucocitosController.text) > 18000) {
+            pontuacao += 1;
+        }
+        if (int.parse(glicemiaController.text) > 12.2) {
+            pontuacao += 1;
+        }
+        if (int.parse(astController.text) > 250) {
+            pontuacao += 1;
+        }
+        if (int.parse(ldhController.text) > 400) {
+            pontuacao += 1;
+        }
+      });
     } else {
-      if (int.parse(idadeController.text) > 55) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(leucocitosController.text) > 16000) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(glicemiaController.text) > 11) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(astController.text) > 250) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
-      if (int.parse(ldhController.text) > 350) {
-        setState(() {
-          pontuacao += 1;
-        });
-      }
+      setState(() {
+        if (int.parse(idadeController.text) > 55) {
+            pontuacao += 1;
+        }
+        if (int.parse(leucocitosController.text) > 16000) {
+            pontuacao += 1;
+        }
+        if (int.parse(glicemiaController.text) > 11) {
+            pontuacao += 1;
+        }
+        if (int.parse(astController.text) > 250) {
+            pontuacao += 1;
+        }
+        if (int.parse(ldhController.text) > 350) {
+            pontuacao += 1;
+        }
+      });
     }
     if (pontuacao >= 3) {
       pontuacaoString = 'Grave';
@@ -127,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
     setState(() {
-      mortalidadeString = mortalidade.toString() + '%';
+      mortalidadeString = '$mortalidade%';
     });
   }
 
